@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-console.log(path.join(__dirname, '/styles'))
+
 let text = "";
 
 fs.readdir(path.join(__dirname, '/styles'), { withFileTypes: true }, (err, files) => {
