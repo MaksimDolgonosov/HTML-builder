@@ -58,6 +58,7 @@ fsPromise.readdir(path.join(__dirname, "project-dist", '/assets'), { encoding: '
 
     })
   });
+  
 
 
 // fsPromise.readdir(path.join(__dirname, '/files'), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
