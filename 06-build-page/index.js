@@ -47,18 +47,43 @@ fsPromise.readdir(path.join(__dirname, "project-dist", '/assets'), { encoding: '
   if (err) throw err;
 })
   .then(files => {
-    console.log(files);
-    files.forEach(file => {
-      console.log(file);
-      if (file.isFile()) {
-        fs.unlink(path.join(__dirname, "project-dist", '/assets/', file.name))
-      } else {
-        fsPromise.rmdir(path.join(__dirname, "project-dist", '/assets/', file.name));
-      }
+    files.forEach(dir => {
+      fsPromise.readdir(path.join(__dirname, "project-dist", '/assets/', dir.name), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
+        if (err) throw err;
+      })
+        .then(files2 => {
+          files2.forEach(remFile => {
+            console.log(path.join(__dirname, "project-dist", '/assets/', `/${dir.name}/`, remFile.name));
+            fsPromise.unlink(path.join(__dirname, "project-dist", '/assets/', `/${dir.name}/`, remFile.name))
+          })
+        })
+        
+
+
+      // function rec(file) {
+      //   if (file.isFile()) {
+      //     fs.unlink(path.join(__dirname, "project-dist", '/assets/', file.name))
+      //   } else {
+      //     fsPromise.readdir(path.join(__dirname, "project-dist", '/assets'), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
+      //       if (err) throw err;
+      //     }).then(file2 => {
+      //       rec(file2);
+      //     })
+
+      //   }
+      // }
+
+      //rec(file);
+      //console.log(file);
+      // if (file.isFile()) {
+      //   fs.unlink(path.join(__dirname, "project-dist", '/assets/', file.name))
+      // } else {
+      //   fsPromise.rmdir(path.join(__dirname, "project-dist", '/assets/', file.name));
+      // }
 
     })
   });
-  
+
 
 
 // fsPromise.readdir(path.join(__dirname, '/files'), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
