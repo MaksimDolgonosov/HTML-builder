@@ -40,58 +40,116 @@ fs.readdir(path.join(__dirname, '/styles'), { withFileTypes: true }, (err, files
     }
   })
 })
+
 //Работаем с папкой assets
 mkdir(path.join(__dirname, "project-dist", 'assets'), { recursive: true, })
 
-fsPromise.readdir(path.join(__dirname, "project-dist", '/assets'), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
+// fsPromise.readdir(path.join(__dirname, "project-dist", '/assets'), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
+//   if (err) throw err;
+// })
+//   .then(files => {
+//     files.forEach(dir => {
+//       fsPromise.readdir(path.join(__dirname, "project-dist", '/assets/', dir.name), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
+//         if (err) throw err;
+//       })
+//         .then(files2 => {
+//           files2.forEach(remFile => {
+//             // console.log(path.join(__dirname, "project-dist", '/assets/', `/${dir.name}/`, remFile.name));
+//             fsPromise.unlink(path.join(__dirname, "project-dist", '/assets/', `/${dir.name}/`, remFile.name))
+//             .then(ss=>console.log(ss));
+
+//           })
+//         })
+
+//       //ДОБАВЛЯЕМ ФАЙЛЫ
+//       fs.readdir(path.join(__dirname, '/assets'), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
+//         if (err) throw err;
+//         console.log(files);
+//       })
+//         .then(files => {
+//           console.log(files);
+//           files.forEach(dir => {
+//             console.log(dir);
+//             mkdir(path.join(__dirname, "project-dist", '/assets/', dir.name), { recursive: true, })
+//             // fsPromise.readdir(path.join(__dirname, '/assets/', dir.name), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
+//             //   if (err) throw err;
+//             // })
+//             //   .then(files2 => {
+//             //     files2.forEach(remFile => {
+//             //       console.log(remFile);
+//             //       //console.log(path.join(__dirname, '/assets/', `/${dir.name}/`, remFile.name), path.join(__dirname, "project-dist", '/assets/', `/${dir.name}/`, remFile.name))
+//             //       //fs.copyFile(path.join(__dirname, 'files', file.name), path.join(__dirname, 'files-copy', file.name));
+//             //       // console.log(path.join(__dirname, "project-dist", '/assets/', `/${dir.name}/`, remFile.name));
+//             //       //fs.copyFile(path.join(__dirname, '/assets/', `/${dir.name}/`, remFile.name), path.join(__dirname, "project-dist", '/assets/', `/${dir.name}/`, remFile.name))
+//             //     })
+//             //   })
+//           })
+//         });
+
+// function rec(file) {
+//   if (file.isFile()) {
+//     fs.unlink(path.join(__dirname, "project-dist", '/assets/', file.name))
+//   } else {
+//     fsPromise.readdir(path.join(__dirname, "project-dist", '/assets'), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
+//       if (err) throw err;
+//     }).then(file2 => {
+//       rec(file2);
+//     })
+
+//   }
+// }
+
+//rec(file);
+//console.log(file);
+// if (file.isFile()) {
+//   fs.unlink(path.join(__dirname, "project-dist", '/assets/', file.name))
+// } else {
+//   fsPromise.rmdir(path.join(__dirname, "project-dist", '/assets/', file.name));
+// }
+
+//   })
+// });
+
+
+
+fsPromise.readdir(path.join(__dirname, '/project-dist/', '/assets/'), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
   if (err) throw err;
 })
   .then(files => {
-    files.forEach(dir => {
-      fsPromise.readdir(path.join(__dirname, "project-dist", '/assets/', dir.name), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
+    files.forEach(file => {
+      fsPromise.readdir(path.join(__dirname, '/project-dist/', '/assets/', file.name), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
         if (err) throw err;
       })
         .then(files2 => {
-          files2.forEach(remFile => {
-            console.log(path.join(__dirname, "project-dist", '/assets/', `/${dir.name}/`, remFile.name));
-            fsPromise.unlink(path.join(__dirname, "project-dist", '/assets/', `/${dir.name}/`, remFile.name))
+          files2.forEach(file2 => {
+            fsPromise.unlink(path.join(__dirname, '/project-dist/', '/assets/', file.name, file2.name))
           })
+
         })
-        
-
-
-      // function rec(file) {
-      //   if (file.isFile()) {
-      //     fs.unlink(path.join(__dirname, "project-dist", '/assets/', file.name))
-      //   } else {
-      //     fsPromise.readdir(path.join(__dirname, "project-dist", '/assets'), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
-      //       if (err) throw err;
-      //     }).then(file2 => {
-      //       rec(file2);
-      //     })
-
-      //   }
-      // }
-
-      //rec(file);
-      //console.log(file);
-      // if (file.isFile()) {
-      //   fs.unlink(path.join(__dirname, "project-dist", '/assets/', file.name))
-      // } else {
-      //   fsPromise.rmdir(path.join(__dirname, "project-dist", '/assets/', file.name));
-      // }
 
     })
   });
 
 
+fsPromise.readdir(path.join(__dirname, '/assets'), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
+  if (err) throw err;
+})
+  .then(files => {
+    files.forEach(file => {
+      mkdir(path.join(__dirname, "project-dist", 'assets', file.name), { recursive: true, });
+      fsPromise.readdir(path.join(__dirname, '/assets/', file.name), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
+        if (err) throw err;
+        console.log(files);
 
-// fsPromise.readdir(path.join(__dirname, '/files'), { encoding: 'utf8', withFileTypes: true }, (err, files) => {
-//   if (err) throw err;
-// })
-//   .then(files => {
-//     files.forEach(file => {
-//       fs.copyFile(path.join(__dirname, 'files', file.name), path.join(__dirname, 'files-copy', file.name));
-//     })
-//   });
+      })
+        .then(files2 => {
+          files2.forEach(file2 => {
+            fsPromise.copyFile(path.join(__dirname, '/assets/', file.name, file2.name), path.join(__dirname, '/project-dist/', '/assets/', file.name, file2.name));
+
+          })
+        })
+
+    })
+  });
+
 
